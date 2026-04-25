@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <!-- 隐私页 -->
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="privacy_permissions_title">App Permissions</string>
+    <string name="privacy_permissions_content">This app requires the following permissions:\n• Storage: To save app settings\n• Network: To check for updates</string>
+    <string name="privacy_data_collection_title">Data Collection</string>
+    <string name="privacy_data_collection_content">This app collects the following information:\n• App preferences (theme, language, etc.)\n• This information is stored locally on your device only and will not be uploaded to any server</string>
+    <string name="privacy_network_title">Network Connection</string>
+    <string name="privacy_network_content">This app requires internet access to check for updates. If you decline, the app will not be available.</string>
+    <string name="privacy_accept">Accept</string>
+    <string name="privacy_reject">Decline</string>
+
+    <!-- 主页 -->
+    <string name="home_title">Home</string>
+    <string name="home_welcome">Welcome</string>
+
+    <!-- 设置页 -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_language_title">Language</string>
+
+    <!-- 主题选项 -->
+    <string name="theme_system">System Default</string>
+    <string name="theme_light">Always Light</string>
+    <string name="theme_dark">Always Dark</string>
+
+    <!-- 语言选项 -->
+    <string name="language_system">System Default</string>
+    <string name="language_chinese">Chinese</string>
+    <string name="language_english">English</string>
+
+    <!-- 通用 -->
+    <string name="back">Back</string>
+</resources>
