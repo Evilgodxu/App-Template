@@ -7,36 +7,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.myapplication.data.repository.UserPreferencesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.util.Locale
 
-class LanguageManager(private val context: Context) {
-    private val userPreferencesRepository = UserPreferencesRepository(context)
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+class LanguageManager(
+    private val context: Context,
+    private val userPreferencesRepository: UserPreferencesRepository,
+) {
+    val languageFlow: Flow<String> = userPreferencesRepository.language
 
-    var currentLocale by mutableStateOf(getInitialLocale())
-        private set
-
-    init {
-        scope.launch {
-            userPreferencesRepository.language.collect { languageCode ->
-                currentLocale = resolveLocale(languageCode)
-            }
-        }
-    }
-
-    private fun getInitialLocale(): Locale {
-        val languageCode = runBlocking { userPreferencesRepository.language.first() }
-        return resolveLocale(languageCode)
+    val localeFlow: Flow<Locale> = languageFlow.map { languageCode ->
+        resolveLocale(languageCode)
     }
 
     fun resolveLocale(languageCode: String): Locale {
@@ -47,8 +32,8 @@ class LanguageManager(private val context: Context) {
         }
     }
 
-    fun getLocalizedResources(context: Context, locale: Locale): Resources {
-        val config = Configuration(context.resources.configuration)
+    fun getLocalizedResources(locale: Locale): Resources {
+        val config = Configuration()
         config.setLocale(locale)
         val localizedContext = context.createConfigurationContext(config)
         return localizedContext.resources
@@ -69,15 +54,19 @@ fun ProvideLanguageManager(languageManager: LanguageManager, content: @Composabl
 @Composable
 fun stringResource(id: Int): String {
     val languageManager = LocalLanguageManager.current
-    val context = LocalContext.current
-    val resources = languageManager.getLocalizedResources(context, languageManager.currentLocale)
+    val locale by languageManager.localeFlow.collectAsStateWithLifecycle(
+        initialValue = Locale.getDefault()
+    )
+    val resources = languageManager.getLocalizedResources(locale)
     return resources.getString(id)
 }
 
 @Composable
 fun stringResource(id: Int, vararg formatArgs: Any): String {
     val languageManager = LocalLanguageManager.current
-    val context = LocalContext.current
-    val resources = languageManager.getLocalizedResources(context, languageManager.currentLocale)
+    val locale by languageManager.localeFlow.collectAsStateWithLifecycle(
+        initialValue = Locale.getDefault()
+    )
+    val resources = languageManager.getLocalizedResources(locale)
     return resources.getString(id, *formatArgs)
 }
