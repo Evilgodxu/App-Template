@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setupWindowInsets()
 
-        languageManager = LanguageManager(this)
+        languageManager = LanguageManager(this, userPreferencesRepository)
 
         setContent {
             val navController = rememberNavController()
