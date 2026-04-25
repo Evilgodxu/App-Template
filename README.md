@@ -5,21 +5,6 @@
 
 一个基于现代 Android 技术栈构建的应用模板，采用 MVVM + Clean Architecture 架构，支持自适应布局和国际化。
 
-## 技术栈
-
-| 类别 | 技术 |
-|------|------|
-| **语言** | Kotlin 2.3.21 |
-| **UI 框架** | Jetpack Compose + Material3 |
-| **架构模式** | MVVM + UDF + Clean Architecture |
-| **依赖注入** | Koin 4.2.1 |
-| **导航框架** | Navigation 2.9.8 |
-| **状态管理** | DataStore + StateFlow |
-| **数据存储** | DataStore 1.2.1 + Room |
-| **异步处理** | Kotlin Coroutines + Flow |
-| **自适应布局** | Material3 Adaptive 1.2.0 |
-| **后台任务** | WorkManager |
-
 ## 项目结构
 
 ```
@@ -139,21 +124,6 @@ Data Source
 | COMPACT | < 600dp | 手机竖屏，单列布局 |
 | MEDIUM | 600-840dp | 手机横屏/小平板，可双列布局 |
 | EXPANDED | > 840dp | 平板/大屏设备，多列布局 |
-
-## 依赖版本
-
-```toml
-[versions]
-agp = "9.2.0"
-kotlin = "2.3.21"
-composeBom = "2026.04.01"
-navigation = "2.9.8"
-koin = "4.2.1"
-datastore = "1.2.1"
-adaptive = "1.2.0"
-```
-
-完整依赖列表见 [gradle/libs.versions.toml](gradle/libs.versions.toml)
 
 ## 代码规范
 
