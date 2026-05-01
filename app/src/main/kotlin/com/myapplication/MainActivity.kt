@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import com.myapplication.data.repository.UserPreferencesRepository
-import com.myapplication.ui.adaptive.ProvideWindowSizeInfo
+import com.myapplication.ui.adaptive.ProvideWindowSizeClass
 import com.myapplication.ui.localization.LanguageManager
 import com.myapplication.ui.localization.ProvideLocalizedContext
 import com.myapplication.ui.navigation.AppNavHost
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
             }
 
             ProvideLocalizedContext(languageManager) {
-                ProvideWindowSizeInfo {
+                ProvideWindowSizeClass {
                     MyApplicationTheme(darkTheme = darkTheme, dynamicColor = false) {
                         Surface(
                             modifier = Modifier.fillMaxSize(),

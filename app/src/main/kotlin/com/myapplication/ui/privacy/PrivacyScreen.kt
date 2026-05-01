@@ -16,7 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.myapplication.R
-import com.myapplication.ui.adaptive.rememberWindowSizeInfo
+import com.myapplication.ui.adaptive.rememberWindowSizeClass
+import androidx.window.core.layout.WindowSizeClass
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 
@@ -29,7 +30,7 @@ fun PrivacyScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val windowSizeInfo = rememberWindowSizeInfo()
+    val windowSizeClass = rememberWindowSizeClass()
 
     LaunchedEffect(uiState.privacyAccepted) {
         if (uiState.privacyAccepted && !uiState.isLoading) {
@@ -47,7 +48,7 @@ fun PrivacyScreen(
         return
     }
 
-    val topBarInsets = if (windowSizeInfo.isCompact) {
+    val topBarInsets = if (!windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
         WindowInsets.statusBars
     } else {
         WindowInsets(0, 0, 0, 0)
@@ -70,7 +71,7 @@ fun PrivacyScreen(
             .consumeWindowInsets(innerPadding)
             .padding(innerPadding)
 
-        if (windowSizeInfo.isExpanded) {
+        if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)) {
             // 平板/大屏布局：双列卡片 + 底部按钮，支持滚动
             Column(
                 modifier = contentModifier

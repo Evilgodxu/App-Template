@@ -10,15 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.myapplication.R
-import com.myapplication.ui.adaptive.rememberWindowSizeInfo
+import com.myapplication.ui.adaptive.rememberWindowSizeClass
+import androidx.window.core.layout.WindowSizeClass
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(onNavigateToSettings: () -> Unit, viewModel: HomeViewModel = koinViewModel()) {
-    val windowSizeInfo = rememberWindowSizeInfo()
-    val topBarInsets = if (windowSizeInfo.isCompact) {
+    val windowSizeClass = rememberWindowSizeClass()
+    val topBarInsets = if (!windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
         WindowInsets.statusBars
     } else {
         WindowInsets(0, 0, 0, 0)
@@ -43,7 +44,7 @@ fun HomeScreen(onNavigateToSettings: () -> Unit, viewModel: HomeViewModel = koin
     ) { innerPadding ->
         // 根据设备类型选择布局
         when {
-            windowSizeInfo.isCompact -> {
+            !windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND) -> {
                 // 手机竖屏：单列布局
                 CompactHomeContent(
                     modifier = Modifier

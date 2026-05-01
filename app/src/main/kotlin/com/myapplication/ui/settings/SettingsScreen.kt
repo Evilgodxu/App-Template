@@ -14,7 +14,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.myapplication.R
-import com.myapplication.ui.adaptive.rememberWindowSizeInfo
+import com.myapplication.ui.adaptive.rememberWindowSizeClass
+import androidx.window.core.layout.WindowSizeClass
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 
@@ -22,7 +23,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsScreen(onNavigateBack: () -> Unit, viewModel: SettingsViewModel = koinViewModel(),) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val windowSizeInfo = rememberWindowSizeInfo()
+    val windowSizeClass = rememberWindowSizeClass()
 
     if (uiState.isLoading) {
         Box(
@@ -34,7 +35,7 @@ fun SettingsScreen(onNavigateBack: () -> Unit, viewModel: SettingsViewModel = ko
         return
     }
 
-    val topBarInsets = if (windowSizeInfo.isCompact) {
+    val topBarInsets = if (!windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
         WindowInsets.statusBars
     } else {
         WindowInsets(0, 0, 0, 0)
@@ -63,7 +64,7 @@ fun SettingsScreen(onNavigateBack: () -> Unit, viewModel: SettingsViewModel = ko
             .padding(innerPadding)
             .padding(16.dp)
 
-        if (windowSizeInfo.isExpanded || windowSizeInfo.isMedium) {
+        if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
             // 横屏/平板布局：双列，支持滚动
             Row(
                 modifier = contentModifier.verticalScroll(rememberScrollState()),
