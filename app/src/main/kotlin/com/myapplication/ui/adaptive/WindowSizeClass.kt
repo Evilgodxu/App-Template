@@ -4,7 +4,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.window.core.layout.WindowWidthSizeClass
+import androidx.window.core.layout.WindowSizeClass
 
 enum class DeviceType {
     COMPACT, // 手机竖屏
@@ -13,7 +13,7 @@ enum class DeviceType {
 }
 
 class WindowSizeInfo(
-    val widthSizeClass: WindowWidthSizeClass,
+    val windowSizeClass: WindowSizeClass,
     val deviceType: DeviceType,
 ) {
     val isCompact: Boolean
@@ -36,17 +36,20 @@ val LocalWindowSizeInfo = compositionLocalOf<WindowSizeInfo> {
 @Composable
 fun ProvideWindowSizeInfo(content: @Composable () -> Unit) {
     val adaptiveInfo = currentWindowAdaptiveInfo()
-    val windowSizeClass = adaptiveInfo.windowSizeClass.windowWidthSizeClass
+    val windowSizeClass = adaptiveInfo.windowSizeClass
 
-    val deviceType = when (windowSizeClass) {
-        WindowWidthSizeClass.COMPACT -> DeviceType.COMPACT
-        WindowWidthSizeClass.MEDIUM -> DeviceType.MEDIUM
-        WindowWidthSizeClass.EXPANDED -> DeviceType.EXPANDED
+    val deviceType = when {
+        windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND) ->
+            if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)) {
+                DeviceType.EXPANDED
+            } else {
+                DeviceType.MEDIUM
+            }
         else -> DeviceType.COMPACT
     }
 
     val windowSizeInfo = WindowSizeInfo(
-        widthSizeClass = windowSizeClass,
+        windowSizeClass = windowSizeClass,
         deviceType = deviceType,
     )
 

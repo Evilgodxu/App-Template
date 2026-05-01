@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -20,8 +21,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+    }
+
+    androidResources {
         // 禁用按语言分包，支持应用内语言切换
-        resourceConfigurations += listOf("zh", "en")
+        localeFilters += listOf("zh", "en")
     }
 
     buildTypes {
@@ -38,25 +42,27 @@ android {
     packaging {
         resources {
             excludes += setOf(
-                "META-INF/AL2.0",
-                "META-INF/LGPL2.1",
-                "META-INF/LICENSE",
-                "META-INF/LICENSE.md",
-                "META-INF/LICENSE-notice.md",
-                "META-INF/LICENSE.txt",
-                "META-INF/NOTICE",
-                "META-INF/NOTICE.md",
-                "META-INF/NOTICE.txt",
-                "META-INF/INDEX.LIST",
-                "META-INF/DEPENDENCIES",
+                // Kotlin 模块元数据文件（每个 Kotlin 库都会生成，必然重复）
                 "META-INF/*.kotlin_module",
+                // Kotlin 协程调试探针
+                "META-INF/DebugProbesKt.bin",
+                // 常见的重复许可证文件
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/LICENSE.md",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/NOTICE.md",
+                // 版本控制索引文件
+                "META-INF/INDEX.LIST",
+                // 第三方库签名文件
+                "META-INF/*.SF",
+                "META-INF/*.DSA",
+                "META-INF/*.RSA",
+                // AndroidX 版本属性文件（各库独立包含，无需打包）
                 "META-INF/*.version",
-                "META-INF/versions/**",
                 "META-INF/androidx/**",
-                "META-INF/com/**",
-                "META-INF/services/**",
-                "META-INF/version-control-info.textproto",
-                "DebugProbesKt.bin"
             )
         }
     }
@@ -100,7 +106,11 @@ dependencies {
     implementation(libs.androidx.material3.adaptive.layout)
     implementation(libs.androidx.material3.adaptive.navigation)
 
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
+
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

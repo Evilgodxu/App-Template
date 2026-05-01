@@ -12,7 +12,7 @@ import com.myapplication.ui.settings.SettingsScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startDestination: String,
+    startDestination: Any,
     onExitApp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -21,29 +21,31 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        composable(Screen.Privacy.route) {
+        composable<Privacy> {
             PrivacyScreen(
                 onPrivacyAccepted = {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Privacy.route) { inclusive = true }
+                    navController.navigate(Home) {
+                        popUpTo<Privacy> { inclusive = true }
                     }
                 },
                 onPrivacyRejected = onExitApp,
             )
         }
 
-        composable(Screen.Home.route) {
+        composable<Home> {
             HomeScreen(
                 onNavigateToSettings = {
-                    navController.navigate(Screen.Settings.route)
+                    navController.navigate(Settings)
                 },
             )
         }
 
-        composable(Screen.Settings.route) {
+        composable<Settings> {
             SettingsScreen(
                 onNavigateBack = {
-                    navController.popBackStack()
+                    if (navController.currentBackStackEntry?.destination?.route == Settings::class.qualifiedName) {
+                        navController.popBackStack()
+                    }
                 },
             )
         }

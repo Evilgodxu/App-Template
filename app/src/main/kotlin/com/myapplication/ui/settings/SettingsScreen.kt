@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.myapplication.R
 import com.myapplication.ui.adaptive.rememberWindowSizeInfo
-import com.myapplication.ui.localization.stringResource
+import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,7 +110,7 @@ private fun ThemeSettingsCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         ),
     ) {
         Column(
@@ -163,7 +163,7 @@ private fun LanguageSettingsCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         ),
     ) {
         Column(

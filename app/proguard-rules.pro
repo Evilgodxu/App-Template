@@ -1,21 +1,31 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Koin 依赖注入
+# Koin 使用反射创建实例，需保留模块和注解标记的类
+-keep class * extends org.koin.core.module.Module { *; }
+-keepclassmembers class * {
+    @org.koin.core.annotation.* *;
+}
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Kotlin Serialization
+# 保留序列化所需的注解和合成方法
+-keepattributes *Annotation*, InnerClasses, EnclosingMethod, Signature
+-keepclassmembers class * {
+    @kotlinx.serialization.SerialName <fields>;
+    @kotlinx.serialization.Serializable <methods>;
+}
+-keep class kotlinx.serialization.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# DataStore
+# 保留 DataStore 内部类和 Preferences 实现
+-keep class androidx.datastore.** { *; }
+-keepclassmembers class * extends androidx.datastore.preferences.Preferences { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Navigation Compose Type-safe API
+# 保留导航类型和 NavType 实现
+-keep class * implements androidx.navigation.NavType { *; }
+-keepclassmembers class * {
+    @androidx.navigation.NavType <fields>;
+}
+
+# 保留行号信息用于 Release 崩溃堆栈分析
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile

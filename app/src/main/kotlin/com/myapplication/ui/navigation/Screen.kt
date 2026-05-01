@@ -1,7 +1,12 @@
 package com.myapplication.ui.navigation
 
-sealed class Screen(val route: String) {
-    data object Privacy : Screen("privacy")
-    data object Home : Screen("home")
-    data object Settings : Screen("settings")
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+object Privacy
+
+@Serializable
+object Home
+
+@Serializable
+object Settings

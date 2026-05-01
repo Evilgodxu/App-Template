@@ -35,7 +35,7 @@ val md_theme_light_outline = Color(0xFFBDBDBD) // 轮廓线：灰色
 val md_theme_light_outlineVariant = Color(0xFFE0E0E0) // 轮廓线变体：更浅的灰
 
 // 背景色 - 用于页面背景
-val md_theme_light_background = Color(0xFFFAFAFA) // 页面背景：柔和白
+val md_theme_light_background = Color(0xFFFFFFFF) // 页面背景：纯白色
 val md_theme_light_onBackground = Color(0xFF1C1C1C) // 背景上的文字：近黑色
 
 // 表面色 - 用于卡片、对话框、底部栏等表面元素
@@ -99,7 +99,7 @@ val md_theme_dark_background = Color(0xFF1A1A1A) // 页面背景：纯深灰
 val md_theme_dark_onBackground = Color(0xFFE8E8E8) // 背景上的文字：浅灰
 
 // 表面色 - 用于卡片、对话框、底部栏等表面元素
-val md_theme_dark_surface = Color(0xFF222222) // 表面：纯深灰
+val md_theme_dark_surface = Color(0xFF1A1A1A) // 表面：纯深灰
 val md_theme_dark_onSurface = Color(0xFFE8E8E8) // 表面上的文字：浅灰
 val md_theme_dark_surfaceVariant = Color(0xFF2E2E2E) // 表面变体：中深灰
 val md_theme_dark_onSurfaceVariant = Color(0xFFC8C8C8) // 表面变体上的文字：浅灰
