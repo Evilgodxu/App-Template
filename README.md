@@ -75,7 +75,7 @@ app/src/main/kotlin/com/template/jh/
 1. 克隆仓库
 
 ```bash
-git clone https://github.com/Evilgodxu/Kotlin-Compose-MVVM-Template.git
+git clone https://github.com/Evilgodxu/kotlin-android-template.git
 ```
 
 2. 使用 Android Studio 打开项目
