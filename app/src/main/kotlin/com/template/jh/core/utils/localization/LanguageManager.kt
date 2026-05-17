@@ -1,4 +1,4 @@
-package com.template.jh.ui.localization
+package com.template.jh.core.utils.localization
 
 import android.content.Context
 import android.content.res.Configuration

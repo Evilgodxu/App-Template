@@ -19,8 +19,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import com.template.jh.data.repository.UserPreferencesRepository
 import com.template.jh.ui.adaptive.ProvideWindowSizeClass
-import com.template.jh.ui.localization.LanguageManager
-import com.template.jh.ui.localization.ProvideLocalizedContext
+import com.template.jh.core.utils.localization.LanguageManager
+import com.template.jh.core.utils.localization.ProvideLocalizedContext
 import com.template.jh.ui.navigation.AppNavHost
 import com.template.jh.ui.navigation.Home
 import com.template.jh.ui.navigation.Privacy
